@@ -31,20 +31,20 @@ SELECT
     T.status,
     COUNT(T.task_id) as task_count
 FROM 
-    dwarfs D
-LEFT JOIN tasks T 
-ON dwarfs.dwarf_id = tasks.assigned_to
-GROUP BY tasks.status
-ORDER BY tasks.status;
+    Dwarves D
+LEFT JOIN Tasks T 
+ON D.dwarf_id = T.assigned_to
+GROUP BY T.status
+ORDER BY T.status;
 ```
 
 5. 
 
 ```sql
 SELECT DISTINCT T.description, T.status
-FROM tasks T
-JOIN dwarfs D ON T.assigned_to = D.dwarf_id
-JOIN squads S ON D.squad_id = S.squad_id
+FROM Tasks T
+JOIN Dwarves D ON T.assigned_to = D.dwarf_id
+JOIN Squads S ON D.squad_id = S.squad_id
 WHERE S.name = 'Guardians';
 ```
 
