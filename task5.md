@@ -3,13 +3,13 @@ SELECT
     e.expedition_id,
     e.destination,
     e.status,
-    -- Расчет процента выживших
+    -- процент выживших
     ROUND(
         (SUM(CASE WHEN em.survived = true THEN 1 ELSE 0 END) * 100.0 / COUNT(DISTINCT em.dwarf_id)),
         2
     ) as survival_rate,
     
-    -- Подсчет ценности артефактов
+    -- ценность артефактов
     COALESCE(
         (SELECT SUM(value) 
          FROM EXPEDITION_ARTIFACTS ea 
@@ -17,12 +17,12 @@ SELECT
         0
     ) as artifacts_value,
     
-    -- Подсчет обнаруженных мест
+    -- расчет обнаруженных мест
     (SELECT COUNT(*) 
      FROM EXPEDITION_SITES es 
      WHERE es.expedition_id = e.expedition_id) as discovered_sites,
     
-    -- Расчет успешности встреч с существами
+    -- расчет успешности встреч с существами
     ROUND(
         COALESCE(
             (SELECT (SUM(CASE WHEN outcome = 'Favorable' THEN 1 ELSE 0 END) * 100.0 / COUNT(*))
@@ -33,10 +33,10 @@ SELECT
         2
     ) as encounter_success_rate,
     
-    -- Расчет длительности экспедиции
+    -- подсчет длительности экспедиции
     DATEDIFF(e.return_date, e.departure_date) as expedition_duration,
     
-    -- Расчет общего показателя успешности
+    -- обший показатель успешности
     ROUND(
         (
             (SUM(CASE WHEN em.survived = true THEN 1 ELSE 0 END) * 100.0 / COUNT(DISTINCT em.dwarf_id)) / 100 * 0.3 + 
@@ -59,7 +59,6 @@ SELECT
         2
     ) as overall_success_score,
     
-    -- Формирование связанных сущностей
     JSON_OBJECT(
         'member_ids', (SELECT JSON_ARRAYAGG(dwarf_id) 
                       FROM EXPEDITION_MEMBERS em2 
