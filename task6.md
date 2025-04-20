@@ -53,7 +53,7 @@ SELECT
   ROUND(material_conversion_ratio::numeric, 2) AS material_conversion_ratio,
   ROUND(average_craftsdwarf_skill::numeric, 2) AS average_craftsdwarf_skill,
   ROUND(skill_quality_correlation::numeric, 2) AS skill_quality_correlation,
-  JSON_BUILD_OBJECT(
+  JSON_OBJECT(
     'craftsdwarf_ids', craftsdwarf_ids,
     'product_ids', product_ids,
     'material_ids', material_ids,
