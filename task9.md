@@ -1,4 +1,4 @@
-
+```sql
 WITH trade AS (
   SELECT
     c.civilization_type,
@@ -140,3 +140,4 @@ LEFT JOIN trade_diplomatic_corr tdc ON tdc.civilization_type = civil_trade.civil
 LEFT JOIN critical_imports ci ON TRUE
 LEFT JOIN exporteff ee ON TRUE
 LEFT JOIN timeline t ON TRUE
+```
